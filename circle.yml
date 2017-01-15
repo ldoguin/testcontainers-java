@@ -27,7 +27,7 @@ test:
         -v "$(pwd)":/app \
         -w /app \
         selenium/standalone-chrome-debug:2.52.0 \
-        ./mvnw -B -pl core test -Dtest=*Docker
+        ./mvnw -B -pl core test -Dtest=*DockerInDockerTest
     - mvn -B test -f shade-test/pom.xml
   post:
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/
