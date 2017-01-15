@@ -21,7 +21,7 @@ test:
     # Run Docker-in-Docker tests
     # Yes, we use selenium image, but we use it anyway in BrowserContainer's tests
     - >
-      docker -H unix:///var/run/docker.sock run --rm \
+      DOCKER_HOST=unix:///var/run/docker.sock docker run --rm \
         -v "$HOME/.m2":/root/.m2/ \
         -v /var/run/docker.sock:/var/run/docker.sock \
         -v "$(pwd)":/app \
