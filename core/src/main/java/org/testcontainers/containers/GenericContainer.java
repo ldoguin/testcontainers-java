@@ -35,7 +35,6 @@ import org.testcontainers.utility.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.time.Duration;
@@ -601,12 +600,7 @@ public class GenericContainer<SELF extends GenericContainer<SELF>>
      */
     @Override
     public SELF withClasspathResourceMapping(String resourcePath, String containerPath, BindMode mode) {
-        URL resource = GenericContainer.class.getClassLoader().getResource(resourcePath);
-
-        if (resource == null) {
-            throw new IllegalArgumentException("Could not find classpath resource at provided path: " + resourcePath);
-        }
-        String resourceFilePath = resource.getFile();
+        String resourceFilePath = PathUtils.getFilenameForClasspathResource(resourcePath);
 
         this.addFileSystemBind(resourceFilePath, containerPath, mode);
 

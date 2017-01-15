@@ -6,7 +6,6 @@ import org.rnorth.ducttape.ratelimits.RateLimiterBuilder;
 import org.rnorth.ducttape.unreliables.Unreliables;
 import org.testcontainers.containers.traits.LinkableContainer;
 
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -128,14 +127,7 @@ public abstract class JdbcDatabaseContainer<SELF extends JdbcDatabaseContainer<S
         String resourceName = parameters.getOrDefault(paramName, defaultResource);
 
         if (resourceName != null) {
-            URL classPathResource = ClassLoader.getSystemClassLoader().getResource(resourceName);
-            if (classPathResource == null) {
-                throw new ContainerLaunchException("Could not locate a classpath resource for " + paramName +" of " + resourceName);
-            }
-
-            final String resourceFile = classPathResource.getFile();
-
-            addFileSystemBind(resourceFile, pathNameInContainer, BindMode.READ_ONLY);
+            addFileSystemBind(resourceName, pathNameInContainer, BindMode.READ_ONLY);
         }
     }
 
